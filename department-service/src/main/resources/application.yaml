@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: DEPARTMENT-SERVICE
+  config:
+    import: optional:configserver:http://localhost:8888
+  zipkin:
+    base-url: http://localhost:9411/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    sampling:
+      probability: 1.0
+
+#Tracing pattern with micrometer and zipkin
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+
+
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/ms_company
+#    username: root
+#    password: root
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show_sql: true
+#server:
+#  port: 8080
+#eureka:
+#  instance:
+#    client:
+#      serviceUrl:
+#        defaultZone: http://localhost:8761/eureka/

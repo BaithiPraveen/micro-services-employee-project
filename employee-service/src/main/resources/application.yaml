@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: EMPLOYEE-SERVICE
+  config:
+    import: optional:configserver:http://localhost:8888
+  zipkin:
+    base-url: http://localhost:9411/
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health
+  tracing:
+    sampling:
+      probability: 1.0
+
+#Tracing pattern with micrometer and zipkin
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      EMPLOYEE-SERVICE:
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+        waitDurationInOpenState: 5s
+  retry:
+    instances:
+      EMPLOYEE-SERVICE:
+        maxRetryAttempts: 5
+        registerHealthIndicator: true
+        wait: 1s
