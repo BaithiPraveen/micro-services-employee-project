@@ -114,7 +114,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public ResponseDTO updateEmployee(Long employeeId, Employee employee) {
-        String baseDeptURL = "http://localhost:8080/dept/;http://localhost:8082/dept/";
+        String baseDeptURL = "http://localhost:8080/dept/";
         Employee resultEmployee = employeeRepository.findById(employeeId).get();
         resultEmployee.setDepartmentId(employee.getDepartmentId());
         resultEmployee.setEmail(employee.getEmail());

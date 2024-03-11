@@ -3,6 +3,7 @@ eureka:
     client:
       serviceUrl:
         defaultZone: http://localhost:8761/eureka/
+
 logging:
   level:
     org:
@@ -14,6 +15,7 @@ logging:
         web: DEBUG
   pattern:
     level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+
 management:
   endpoints:
     web:
@@ -22,6 +24,7 @@ management:
   tracing:
     sampling:
       probability: 1.0
+
 server:
   port: 9009
 spring:

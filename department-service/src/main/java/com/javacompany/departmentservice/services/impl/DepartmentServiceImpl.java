@@ -34,7 +34,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<EmployeeDTO> findEmployeeListByDepartmentName(String departmentName) {
-        String baseEmployeeURL = "http://localhost:8081/emp/dept/";
+        String baseEmployeeURL = "http://EMPLOYEE-SERVICE/emp/dept/";
         Department department = departmentRepository.findByDepartmentName(departmentName);
         ResponseEntity<List<EmployeeDTO>> listResponseEntity =
                 restTemplate.exchange(baseEmployeeURL + department.getDepartmentCode(),
